@@ -6,6 +6,7 @@ const addUser = async (user) => {
   return db('users').where({ id }).first();
 };
 
+
 module.exports = {
   addUser,
 }
