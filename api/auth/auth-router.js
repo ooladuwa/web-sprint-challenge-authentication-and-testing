@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const bcrypt = require("bcryptjs");
 const Users = require("./auth-model.js")
-const { SECRET } = require('../secrets');
-const jwt = require("jsonwebtoken")
-
-
-
+//MIDDLEWARE
+const checkIfUsernameExists = require("../middleware/checkIfUsernameExists.js")
+const checkLoginPayload = require("../middleware/checkLoginPayload.js")
+const checkRegisterPayload = require("../middleware/checkRegisterPayload")
+const tokenCreator = require("../middleware/tokenCreator")
 
 router.post('/register', (req, res) => {
   
