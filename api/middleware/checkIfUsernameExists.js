@@ -1,17 +1,16 @@
-const db = require('../../data/dbConfig');
-
+const db = require("../../data/dbConfig.js")
 
 module.exports = async (req, res, next) => {
   const { username } = req.body;
   try {
     const [user] = await db('users').where('username', username)
-    if (user) {
+    if (!user) {
       req.user = user;
       next();
     } else {
-      next({ message: 'invalid credentials', status: 401 });
+      res.status(401).json("invalid credentials")
     }
-  } catch (err) {
-    next(err);
+  } catch(err) {
+    next(err)
   }
 };

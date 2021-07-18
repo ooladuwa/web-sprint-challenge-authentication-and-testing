@@ -7,8 +7,18 @@ const checkLoginPayload = require("../middleware/checkLoginPayload.js")
 const checkRegisterPayload = require("../middleware/checkRegisterPayload")
 const tokenCreator = require("../middleware/tokenCreator")
 
-router.post('/register', (req, res) => {
-  
+router.post('/register', checkRegisterPayload, (req, res, next) => {
+  let user = req.body
+  const rounds = process.env.BCRYPT_ROUNDS || 8
+  const hash = bcrypt.hashSync(user.password, rounds)
+
+  user.password = hash
+
+  Users.add(user) 
+    .then((savedUser) => {
+      res.json(savedUser)
+    })
+    .catch(next)
 
   /*
     IMPLEMENT
