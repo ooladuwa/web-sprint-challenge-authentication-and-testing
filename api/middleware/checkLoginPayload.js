@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
   } else {
       Users.findBy(username)
         if(!username) {
-          req.user = username
+          req.user.username = username
           next()
         } else {
           res.status(401).json("username taken")
